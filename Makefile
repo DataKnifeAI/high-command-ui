@@ -118,9 +118,9 @@ docker-login:
 		echo "Error: HARBOR_USERNAME and HARBOR_PASSWORD must be set"; \
 		exit 1; \
 	fi
-	docker login $(HARBOR_REGISTRY) \
+	@printf '%s\n' "$$HARBOR_PASSWORD" | docker login $(HARBOR_REGISTRY) \
 		-u "$$HARBOR_USERNAME" \
-		-p "$$HARBOR_PASSWORD"
+		--password-stdin
 
 docker-build:
 	docker build -t high-command-ui:latest .
