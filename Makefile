@@ -31,6 +31,9 @@ help:
 	@echo ""
 	@echo "Docker Targets:"
 	@echo "  make docker-build   - Build Docker image"
+	@echo "  make docker-login   - Login to Harbor registry (requires HARBOR_USERNAME and HARBOR_PASSWORD)"
+	@echo "  make docker-push    - Build and push image to Harbor registry"
+	@echo "  make docker-pull    - Pull image from Harbor registry"
 	@echo "  make docker-run     - Run Docker container (port 3000)"
 	@echo "  make docker-dev     - Run development container with hot reload"
 	@echo "  make docker-stop    - Stop Docker container"
@@ -104,8 +107,31 @@ clean:
 	npm cache clean --force
 
 # Docker commands
+HARBOR_REGISTRY := harbor.dataknife.net
+APP_NAME := high-command-ui
+HARBOR_IMAGE := $(HARBOR_REGISTRY)/library/$(APP_NAME)
+IMAGE_TAG ?= latest
+
+docker-login:
+	@echo "Logging into Harbor registry..."
+	@if [ -z "$$HARBOR_USERNAME" ] || [ -z "$$HARBOR_PASSWORD" ]; then \
+		echo "Error: HARBOR_USERNAME and HARBOR_PASSWORD must be set"; \
+		exit 1; \
+	fi
+	@printf '%s\n' "$$HARBOR_PASSWORD" | docker login $(HARBOR_REGISTRY) \
+		-u "$$HARBOR_USERNAME" \
+		--password-stdin
+
 docker-build:
 	docker build -t high-command-ui:latest .
+	docker tag high-command-ui:latest $(HARBOR_IMAGE):$(IMAGE_TAG)
+
+docker-push: docker-build docker-login
+	docker push $(HARBOR_IMAGE):$(IMAGE_TAG)
+
+docker-pull:
+	docker pull $(HARBOR_IMAGE):$(IMAGE_TAG)
+	docker tag $(HARBOR_IMAGE):$(IMAGE_TAG) high-command-ui:latest
 
 docker-run: docker-build
 	docker run -d --name high-command-ui -p 3000:3000 \
