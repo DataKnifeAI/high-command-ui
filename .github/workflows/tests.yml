@@ -66,13 +66,14 @@ jobs:
       uses: actions/checkout@v5
       with:
         fetch-depth: 0
-    - name: Push to GitLab
-      env:
-        GITLAB_TOKEN: ${{ secrets.GITLAB_TOKEN }}
-      run: |
-        git config user.name "GitHub Actions"
-        git config user.email "actions@github.com"
-        git remote add gitlab https://gitlab.com/dk-raas/dkai/high-command/high-command-ui.git || true
-        git config credential.helper '!f() { echo "username=oauth2"; echo "password=${GITLAB_TOKEN}"; }; f'
-        git fetch gitlab main || true
-        git push gitlab HEAD:main || echo "GitLab push failed"
+      - name: Push to GitLab
+        env:
+          GITLAB_TOKEN: ${{ secrets.GITLAB_TOKEN }}
+        run: |
+          git config user.name "GitHub Actions"
+          git config user.email "actions@github.com"
+          git remote remove gitlab 2>/dev/null || true
+          git remote add gitlab https://gitlab.com/dk-raas/dkai/high-command/high-command-ui.git
+          git config credential.helper '!f() { echo "username=oauth2"; echo "password=${GITLAB_TOKEN}"; }; f'
+          git fetch gitlab main
+          git push gitlab HEAD:main
