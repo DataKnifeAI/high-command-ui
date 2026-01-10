@@ -2,7 +2,12 @@ version: '3.8'
 
 services:
   high-command-ui:
-    image: harbor.dataknife.net/library/high-command-ui:latest
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: high-command-ui:latest
+    # Alternative: Use Harbor image for production deployments
+    # image: harbor.dataknife.net/library/high-command-ui:latest
     container_name: high-command-ui
     ports:
       - "3000:3000"
@@ -20,7 +25,12 @@ services:
       start_period: 10s
 
   high-command-api:
-    image: harbor.dataknife.net/library/high-command-api:latest
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: high-command-api:latest
+    # Alternative: Use Harbor image for production deployments
+    # image: harbor.dataknife.net/library/high-command-api:latest
     container_name: high-command-api
     ports:
       - "3001:3001"
