@@ -11,11 +11,9 @@ variables:
 
 build:
   stage: build
-  image: harbor.dataknife.net/dockerhub/library/node:20-alpine
+  image: harbor.dataknife.net/dockerhub/library/node:20-slim
   script:
-    - apk add --no-cache ca-certificates
-    - apk update || true
-    - apk add --no-cache make
+    - apt-get update && apt-get install -y --no-install-recommends make git
     - make build
   artifacts:
     paths:
