@@ -1,13 +1,17 @@
 stages:
   - build
   - docker
+  - release
+  - deploy
 
 variables:
   IMAGE_NAME: high-command-ui
+  K8S_NAMESPACE: high-command
+  DEPLOYMENT_NAME: high-command-ui
 
 build:
   stage: build
-  image: node:20-alpine
+  image: harbor.dataknife.net/dockerhub/library/node:20-alpine
   script:
     - apk add --no-cache make
     - make build
