@@ -5,3 +5,11 @@ node_modules
 *.local
 .env
 .env.local
+.env.*
+# K8s secrets - never commit these
+k8s/*secret*.yaml
+k8s/*secret*.yml
+k8s/*.env
+*.secret.yaml
+*.secret.yml
+**/secrets/
