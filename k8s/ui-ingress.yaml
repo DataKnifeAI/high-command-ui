@@ -24,6 +24,13 @@ spec:
             name: high-command-api
             port:
               number: 80
+      - path: /mcp
+        pathType: Prefix
+        backend:
+          service:
+            name: high-command-mcp
+            port:
+              number: 8000
       - path: /
         pathType: Prefix
         backend:
@@ -41,6 +48,13 @@ spec:
             name: high-command-api
             port:
               number: 80
+      - path: /mcp
+        pathType: Prefix
+        backend:
+          service:
+            name: high-command-mcp
+            port:
+              number: 8000
       - path: /
         pathType: Prefix
         backend:
