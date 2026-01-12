@@ -6,8 +6,10 @@ node_modules
 .env
 .env.local
 .env.*
-# K8s secrets - never commit these
+# K8s secrets - never commit these (but allow example files)
 k8s/*secret*.yaml
+!k8s/*secret*-example.yaml
+!k8s/*secret*-example.yml
 k8s/*secret*.yml
 k8s/*.env
 *.secret.yaml
