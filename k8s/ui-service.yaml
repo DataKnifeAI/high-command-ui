@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: high-command-ui
+  namespace: high-command
+  labels:
+    app: high-command-ui
+  annotations:
+    deployment.kubernetes.io/active-version: "blue"
+spec:
+  type: ClusterIP
+  selector:
+    app: high-command-ui
+    version: blue
+  ports:
+  - name: http
+    port: 80
+    targetPort: http
+    protocol: TCP
+  sessionAffinity: None

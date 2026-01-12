@@ -1,0 +1,12 @@
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  name: high-command-ui-pdb
+  namespace: high-command
+  labels:
+    app: high-command-ui
+spec:
+  minAvailable: 1
+  selector:
+    matchLabels:
+      app: high-command-ui

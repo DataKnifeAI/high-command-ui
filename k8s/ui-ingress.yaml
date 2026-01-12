@@ -1,0 +1,70 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: high-command-ui
+  namespace: high-command
+  labels:
+    app: high-command-ui
+  annotations:
+    nginx.ingress.kubernetes.io/ssl-redirect: "true"
+    # Note: No rewrite-target for /api paths - API expects /api prefix
+    # rewrite-target only applies to UI root path via path-specific annotations
+    # Optional: Rate limiting
+    # nginx.ingress.kubernetes.io/limit-rps: "100"
+spec:
+  ingressClassName: nginx
+  rules:
+  - host: hc.dataknife.ai
+    http:
+      paths:
+      - path: /api
+        pathType: Prefix
+        backend:
+          service:
+            name: high-command-api
+            port:
+              number: 80
+      - path: /mcp
+        pathType: Prefix
+        backend:
+          service:
+            name: high-command-mcp
+            port:
+              number: 8000
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: high-command-ui
+            port:
+              number: 80
+  - host: hc.dataknife.net
+    http:
+      paths:
+      - path: /api
+        pathType: Prefix
+        backend:
+          service:
+            name: high-command-api
+            port:
+              number: 80
+      - path: /mcp
+        pathType: Prefix
+        backend:
+          service:
+            name: high-command-mcp
+            port:
+              number: 8000
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: high-command-ui
+            port:
+              number: 80
+  # Uncomment for TLS (when certificates are ready)
+  # tls:
+  # - hosts:
+  #   - hc.dataknife.ai
+  #   - hc.dataknife.net
+  #   secretName: high-command-ui-tls
