@@ -24,7 +24,7 @@ export class ClaudeService {
   constructor() {
     this.apiKey = import.meta.env.VITE_CLAUDE_API_KEY || ''
     if (!this.apiKey) {
-      console.warn('VITE_CLAUDE_API_KEY not set. Claude integration will not work.')
+      console.log('VITE_CLAUDE_API_KEY not set. Claude may work if backend has CLAUDE_API_KEY in secret.')
     }
   }
 
@@ -106,9 +106,10 @@ export class ClaudeService {
     }
   }
 
-  async executeCommand(userMessage: string): Promise<string> {
-    if (!this.apiKey) {
-      throw new Error('Claude API key not configured. Set VITE_CLAUDE_API_KEY environment variable.')
+  async executeCommand(userMessage: string, options?: { useBackendKey?: boolean }): Promise<string> {
+    const useBackendKey = options?.useBackendKey ?? false
+    if (!this.apiKey && !useBackendKey) {
+      throw new Error('Claude API key not configured. Set VITE_CLAUDE_API_KEY or configure CLAUDE_API_KEY in the API.')
     }
 
     try {
@@ -124,13 +125,16 @@ export class ClaudeService {
         input_schema: tool.inputSchema
       }))
 
+      const headers: Record<string, string> = {
+        'Content-Type': 'application/json',
+        'anthropic-version': '2023-06-01'
+      }
+      if (this.apiKey) {
+        headers['x-api-key'] = this.apiKey
+      }
       const response = await fetch('/claude/messages', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'x-api-key': this.apiKey,
-          'anthropic-version': '2023-06-01'
-        },
+        headers,
         body: JSON.stringify({
           model: 'claude-haiku-4-5',
           max_tokens: 1024,
@@ -221,11 +225,7 @@ Use clear hierarchy with H2 (##) and H3 (###) headers. Always prioritize markdow
         
         const followUpResponse = await fetch('/claude/messages', {
           method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'x-api-key': this.apiKey,
-            'anthropic-version': '2023-06-01'
-          },
+          headers,
           body: JSON.stringify({
             model: 'claude-haiku-4-5',
             max_tokens: 1024,
