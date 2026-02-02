@@ -1,0 +1,11 @@
+# Cloudflare Tunnel via Docker (token-based, remote tunnel from Zero Trust dashboard)
+# Set CLOUDFLARED_TOKEN or pass --token when creating the tunnel
+# Ingress is configured in Cloudflare dashboard, not in local config
+
+services:
+  cloudflared:
+    image: cloudflare/cloudflared:latest
+    command: tunnel --no-autoupdate run --token ${CLOUDFLARED_TOKEN}
+    # Use host network so tunnel can reach localhost:3000, :5000, :8000
+    network_mode: host
+    restart: unless-stopped

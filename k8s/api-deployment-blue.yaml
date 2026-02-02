@@ -1,0 +1,104 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: high-command-api-blue
+  namespace: high-command
+  labels:
+    app: high-command-api
+    version: blue
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: high-command-api
+      version: blue
+  template:
+    metadata:
+      labels:
+        app: high-command-api
+        version: blue
+    spec:
+      containers:
+      - name: api
+        image: harbor.dataknife.net/library/high-command-api:v0.11
+        imagePullPolicy: Always
+        env:
+        - name: MODE
+          value: "api"
+        - name: PYTHONUNBUFFERED
+          value: "1"
+        - name: LOG_LEVEL
+          value: "INFO"
+        - name: DATABASE_URL
+          valueFrom:
+            secretKeyRef:
+              name: high-command-api-secrets
+              key: database-url
+        - name: PORT
+          value: "5000"
+        - name: HOST
+          value: "0.0.0.0"
+        - name: HELLDIVERS_API_BASE
+          value: "https://api.helldivers2.dev/api/v1"
+        - name: HELLDIVERS_API_CLIENT_NAME
+          value: "High Command"
+        - name: HELLDIVERS_API_CONTACT
+          value: "lee@fullmetal.dev"
+        - name: CLAUDE_API_KEY
+          valueFrom:
+            secretKeyRef:
+              name: high-command-api-secrets
+              key: claude-api-key
+              optional: true
+        ports:
+        - name: http
+          containerPort: 5000
+          protocol: TCP
+        livenessProbe:
+          httpGet:
+            path: /api/health
+            port: http
+          initialDelaySeconds: 30
+          periodSeconds: 30
+          timeoutSeconds: 5
+          failureThreshold: 3
+        readinessProbe:
+          httpGet:
+            path: /api/health
+            port: http
+          initialDelaySeconds: 10
+          periodSeconds: 10
+          timeoutSeconds: 3
+          failureThreshold: 2
+        resources:
+          requests:
+            cpu: "200m"
+            memory: "256Mi"
+          limits:
+            cpu: "1000m"
+            memory: "1Gi"
+        securityContext:
+          runAsNonRoot: true
+          runAsUser: 1000
+          allowPrivilegeEscalation: false
+          capabilities:
+            drop:
+            - ALL
+        volumeMounts:
+        - name: tmp
+          mountPath: /tmp
+      volumes:
+      - name: tmp
+        emptyDir: {}
+      affinity:
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+          - weight: 100
+            podAffinityTerm:
+              labelSelector:
+                matchExpressions:
+                - key: app
+                  operator: In
+                  values:
+                  - high-command-api
+              topologyKey: kubernetes.io/hostname

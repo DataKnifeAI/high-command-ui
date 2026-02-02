@@ -1,0 +1,14 @@
+apiVersion: gateway.networking.k8s.io/v1beta1
+kind: ReferenceGrant
+metadata:
+  name: allow-high-command-mcp-access
+  namespace: mcp-servers
+spec:
+  from:
+    - group: gateway.networking.k8s.io
+      kind: HTTPRoute
+      namespace: high-command
+  to:
+    - group: ""
+      kind: Service
+      name: high-command-mcp

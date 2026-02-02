@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: high-command-api
+  namespace: high-command
+  labels:
+    app: high-command-api
+  annotations:
+    deployment.kubernetes.io/active-version: "green"
+spec:
+  type: ClusterIP
+  selector:
+    app: high-command-api
+    version: green
+  ports:
+  - name: http
+    port: 80
+    targetPort: http
+    protocol: TCP
+  sessionAffinity: None

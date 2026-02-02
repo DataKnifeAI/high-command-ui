@@ -1,0 +1,52 @@
+# Cloudflare Tunnel - translates:
+#   docker run cloudflare/cloudflared:latest tunnel --no-autoupdate run --token <TOKEN>
+#
+# Uses wrapper image (cloudflare/cloudflared + alpine shell) for token injection.
+# Build: docker build -t harbor.dataknife.net/library/cloudflared-tunnel:latest cloudflare/
+#
+# Token from secret (kubectl create secret generic cloudflared-tunnel-credentials
+#   --from-literal=token='<TOKEN>' -n high-command)
+# Ingress configured in Cloudflare Zero Trust dashboard
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cloudflared-tunnel
+  namespace: high-command
+  labels:
+    app: cloudflared-tunnel
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: cloudflared-tunnel
+  template:
+    metadata:
+      labels:
+        app: cloudflared-tunnel
+    spec:
+      imagePullSecrets:
+      - name: harbor-registry-secret
+      containers:
+      - name: cloudflared
+        image: harbor.dataknife.net/library/cloudflared-tunnel:latest
+        imagePullPolicy: Always
+        env:
+        - name: TUNNEL_TOKEN
+          valueFrom:
+            secretKeyRef:
+              name: cloudflared-tunnel-credentials
+              key: token
+        resources:
+          requests:
+            cpu: "50m"
+            memory: "64Mi"
+          limits:
+            cpu: "200m"
+            memory: "128Mi"
+        securityContext:
+          runAsNonRoot: true
+          runAsUser: 65532
+          allowPrivilegeEscalation: false
+          capabilities:
+            drop:
+            - ALL
