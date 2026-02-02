@@ -1,0 +1,18 @@
+# Certificate for High Command Gateway TLS (hc.dataknife.ai)
+# cert-manager creates this secret and auto-renews via Let's Encrypt DNS-01
+# The Gateway references this secret in certificateRefs
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: high-command-gateway-https-dataknife-ai
+  namespace: high-command
+  labels:
+    app: high-command
+spec:
+  secretName: high-command-gateway-https-dataknife-ai
+  issuerRef:
+    name: letsencrypt-dns01
+    kind: ClusterIssuer
+    group: cert-manager.io
+  dnsNames:
+    - hc.dataknife.ai

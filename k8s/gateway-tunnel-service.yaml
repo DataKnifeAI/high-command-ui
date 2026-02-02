@@ -1,0 +1,18 @@
+# Stable alias for Cloudflare Tunnel to reach the Envoy Gateway.
+# The tunnel uses this instead of the auto-generated Envoy service name (which includes a hash).
+# If the Gateway is recreated and the Envoy service name changes, update externalName:
+#   kubectl get svc -n envoy-gateway-system | grep high-command
+apiVersion: v1
+kind: Service
+metadata:
+  name: high-command-gateway
+  namespace: high-command
+  labels:
+    app: high-command
+spec:
+  type: ExternalName
+  externalName: envoy-high-command-high-command-gateway-dfdb1d4f.envoy-gateway-system.svc.cluster.local
+  ports:
+  - name: https
+    port: 443
+    protocol: TCP

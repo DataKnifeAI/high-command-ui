@@ -1,0 +1,35 @@
+apiVersion: gateway.networking.k8s.io/v1
+kind: Gateway
+metadata:
+  name: high-command-gateway
+  namespace: high-command
+  labels:
+    app: high-command
+  annotations:
+    # Kube-VIP load balancer configuration for .ai domain
+    # IP 192.168.14.184 is assigned for hc.dataknife.ai
+    # Note: Kube-VIP annotation goes on the LoadBalancer service, not the Gateway
+    # The service is created by Envoy Gateway and will be annotated separately
+    # cert-manager: Certificate is managed by gateway-certificate.yaml (explicit Certificate)
+    # Uses letsencrypt-dns01 ClusterIssuer for auto-renewal
+    cert-manager.io/cluster-issuer: letsencrypt-dns01
+spec:
+  gatewayClassName: envoy
+  listeners:
+    # HTTPS listener for hc.dataknife.ai (dedicated cert via gateway-certificate.yaml)
+    # Internal traffic uses port 80, external uses port 443 via WAN port forward
+    - name: https-dataknife-ai
+      protocol: HTTPS
+      port: 443
+      hostname: hc.dataknife.ai
+      tls:
+        mode: Terminate
+        # certificateRefs must be present, but cert-manager gateway-shim will manage the Secret
+        # cert-manager will create/update this Secret automatically based on the annotation
+        # Secret name pattern: <gateway-name>-<listener-name>
+        # Note: namespace omitted when Secret is in same namespace as Gateway (per cert-manager docs)
+        certificateRefs:
+          - name: high-command-gateway-https-dataknife-ai
+      allowedRoutes:
+        namespaces:
+          from: Same

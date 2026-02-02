@@ -3,15 +3,33 @@
 
 import { ClaudeService } from './claude'
 
+interface ApiConfig {
+  claudeEnabled?: boolean
+}
+
 class HighCommandAPI {
   private baseUrl: string = '/api' // Use local proxy
   private mcpUrl: string = '/mcp' // Use local proxy
   private claudeService: ClaudeService
+  private configCache: ApiConfig | null = null
 
   constructor() {
     console.log('API Server:', this.baseUrl)
     console.log('MCP Server:', this.mcpUrl)
     this.claudeService = new ClaudeService()
+  }
+
+  private async getConfig(): Promise<ApiConfig> {
+    if (this.configCache) return this.configCache
+    try {
+      const res = await fetch(`${this.baseUrl}/config`)
+      if (res.ok) {
+        this.configCache = await res.json()
+      }
+    } catch {
+      // Ignore - backend may not have /api/config
+    }
+    return this.configCache ?? {}
   }
 
   private async handleResponse(response: Response) {
@@ -23,14 +41,20 @@ class HighCommandAPI {
 
   async executeCommand(prompt: string): Promise<string> {
     try {
-      // Use Claude with MCP tools if API key is available
+      // Use Claude if: (1) we have a local API key, or (2) backend has key in secret
       const claudeApiKey = import.meta.env.VITE_CLAUDE_API_KEY
+      const config = await this.getConfig()
+      const backendHasClaude = config.claudeEnabled === true
+
       if (claudeApiKey) {
         return await this.claudeService.executeCommand(prompt)
       }
+      if (backendHasClaude) {
+        return await this.claudeService.executeCommand(prompt, { useBackendKey: true })
+      }
 
-      // Fallback: use keyword matching if no Claude API key
-      console.warn('No Claude API key found, using basic keyword matching')
+      // Fallback: use keyword matching if no Claude available
+      console.warn('No Claude API key found (local or backend), using basic keyword matching')
       return await this.executeCommandWithKeywordMatching(prompt)
     } catch (error) {
       console.error('Command error:', error)
