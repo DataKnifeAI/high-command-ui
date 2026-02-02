@@ -67,16 +67,14 @@ NEW_SVC=$(kubectl get svc -n envoy-gateway-system -o name | grep high-command | 
 kubectl patch svc high-command-gateway -n high-command -p "{\"spec\":{\"externalName\":\"${NEW_SVC}.envoy-gateway-system.svc.cluster.local\"}}"
 ```
 
-## Image options
+## Image
 
-**Default (Alpine)**: Uses `alpine:3.19` and installs cloudflared from Alpine edge/testing at startup. Works without building.
+The deployment uses `cloudflare/Dockerfile` (Alpine + cloudflared binary, shell for token injection). GitLab CI builds and pushes on tags. To build manually:
 
-**Custom (latest cloudflared)**: Build `cloudflare/Dockerfile` to get the official `cloudflare/cloudflared:latest` binary with a shell for token injection:
 ```bash
 docker build -t harbor.dataknife.net/library/cloudflared-tunnel:latest cloudflare/
 docker push harbor.dataknife.net/library/cloudflared-tunnel:latest
 ```
-Then change the deployment image to `harbor.dataknife.net/library/cloudflared-tunnel:latest` and remove the `command` block.
 
 ## Files
 

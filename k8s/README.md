@@ -2,13 +2,15 @@
 
 This directory contains Kubernetes manifests for deploying the High Command stack (UI, API, MCP, Gateway, Cloudflare Tunnel).
 
+## Architecture
+
+Traffic flow: **Cloudflare Tunnel** → **Envoy Gateway** → **HTTPRoute** → UI/API/MCP. No nginx Ingress.
+
 ## UI Files
 
-- `ui-deployment-blue.yaml` - Blue deployment (active version)
-- `ui-deployment-green.yaml` - Green deployment (standby version)
-- `ui-service.yaml` - Service to route traffic between blue/green
-- `ui-pdb.yaml` - Pod Disruption Budget for availability
-- `ui-ingress.yaml` - Ingress configuration for external access
+- `ui-deployment-blue.yaml`, `ui-deployment-green.yaml` - Blue/green deployments
+- `ui-service.yaml` - Service routing
+- `ui-pdb.yaml` - Pod Disruption Budget
 
 ## Full Stack Files
 
@@ -26,19 +28,20 @@ See `CLOUDFLARE_TUNNEL.md` for tunnel setup.
 
 **No secrets are stored in these files.**
 
-**Claude (API key in backend):** Store the key in the API secret so the UI never sees it:
+**API secrets** (required): `database-url` and optionally `claude-api-key`:
 
 ```bash
 kubectl create secret generic high-command-api-secrets \
+  --from-literal=database-url='postgresql://user:password@high-command-postgres-rw.high-command.svc.cluster.local:5432/highcommand' \
   --from-literal=claude-api-key='sk-ant-api03-...' \
   -n high-command
 ```
 
-The API proxies `/claude/*` to Anthropic and adds the key server-side.
+See `api-secrets-example.yaml` for details.
 
 ## Cloudflare
 
-The `../cloudflare/` folder contains the tunnel Dockerfile and local dev config (Caddy, docker-compose). GitLab CI builds the cloudflared-tunnel image from `cloudflare/Dockerfile`.
+The `../cloudflare/` folder contains the tunnel Dockerfile. GitLab CI builds the cloudflared-tunnel image from `cloudflare/Dockerfile`.
 
 ## Environment Variables
 
