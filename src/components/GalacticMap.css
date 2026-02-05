@@ -5,12 +5,12 @@
   padding: 24px;
   height: 100%;
   overflow-y: auto;
-  background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
+  background: linear-gradient(135deg, #0a1628 0%, #132f4c 100%);
 }
 
 .map-header {
   text-align: center;
-  border-bottom: 2px solid rgba(255, 179, 0, 0.3);
+  border-bottom: 2px solid rgba(255, 231, 16, 0.3);
   padding-bottom: 16px;
 }
 
@@ -19,13 +19,13 @@
   color: var(--accent-color);
   margin-bottom: 12px;
   letter-spacing: 1px;
-  text-shadow: 0 0 10px rgba(255, 179, 0, 0.3);
+  text-shadow: 0 0 10px rgba(255, 231, 16, 0.3);
 }
 
 .campaign-info {
-  background: rgba(102, 255, 0, 0.05);
+  background: rgba(64, 145, 108, 0.05);
   padding: 12px;
-  border: 1px solid rgba(102, 255, 0, 0.2);
+  border: 1px solid rgba(64, 145, 108, 0.2);
   border-radius: 2px;
 }
 
@@ -45,7 +45,7 @@
 
 .planet-card {
   background: rgba(0, 0, 0, 0.4);
-  border: 2px solid rgba(255, 179, 0, 0.2);
+  border: 2px solid rgba(255, 231, 16, 0.2);
   padding: 16px;
   border-radius: 2px;
   transition: all 0.3s ease;
@@ -55,8 +55,8 @@
 }
 
 .planet-card:hover {
-  border-color: rgba(255, 179, 0, 0.5);
-  box-shadow: 0 0 20px rgba(255, 179, 0, 0.2);
+  border-color: rgba(255, 231, 16, 0.5);
+  box-shadow: 0 0 20px rgba(255, 231, 16, 0.2);
   transform: translateY(-2px);
 }
 
@@ -78,7 +78,7 @@
 .planet-index {
   font-size: 11px;
   color: var(--text-dim);
-  background: rgba(255, 179, 0, 0.1);
+  background: rgba(255, 231, 16, 0.1);
   padding: 4px 8px;
   border-radius: 2px;
   font-weight: bold;
@@ -128,7 +128,7 @@
   width: 100%;
   height: 8px;
   background: rgba(0, 0, 0, 0.6);
-  border: 1px solid rgba(102, 255, 0, 0.2);
+  border: 1px solid rgba(64, 145, 108, 0.2);
   border-radius: 2px;
   overflow: hidden;
 }
@@ -163,7 +163,7 @@
   text-align: center;
   padding: 40px;
   background: rgba(0, 0, 0, 0.3);
-  border: 2px dashed rgba(255, 179, 0, 0.2);
+  border: 2px dashed rgba(255, 231, 16, 0.2);
   border-radius: 2px;
 }
 
@@ -180,7 +180,7 @@
 }
 
 .map-legend {
-  border-top: 2px solid rgba(255, 179, 0, 0.3);
+  border-top: 2px solid rgba(255, 231, 16, 0.3);
   padding-top: 16px;
 }
 
