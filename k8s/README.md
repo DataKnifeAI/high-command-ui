@@ -1,80 +1,89 @@
-# Kubernetes Deployment Files
+# High Command Kubernetes (Kustomize)
 
-This directory contains Kubernetes manifests for deploying the High Command stack (UI, API, MCP, Gateway, Cloudflare Tunnel).
+Kustomize-based deployment for the High Command stack: UI, API, Poller, PostgreSQL, Gateway, Cloudflare Tunnel.
 
-## Architecture
+## Structure
 
-Traffic flow: **Cloudflare Tunnel** → **Envoy Gateway** → **HTTPRoute** → UI/API/MCP. No nginx Ingress.
+```
+k8s/
+├── base/                    # Base resources by component
+│   ├── api/                 # API deployments (blue/green), service, pdb
+│   ├── ui/                  # UI deployments (blue/green), service, pdb
+│   ├── poller/              # Data collector
+│   ├── postgres/            # CloudNativePG cluster, pooler
+│   ├── gateway/             # Envoy Gateway, HTTPRoute, certificate
+│   ├── mcp/                 # MCP service alias, ReferenceGrant
+│   └── cloudflare/          # Cloudflare Tunnel deployment
+├── overlays/
+│   └── default/             # Default overlay (no patches)
+├── docs/
+│   └── CLOUDFLARE_TUNNEL.md # Tunnel setup guide
+└── README.md
+```
 
-## UI Files
-
-- `ui-deployment-blue.yaml`, `ui-deployment-green.yaml` - Blue/green deployments
-- `ui-service.yaml` - Service routing
-- `ui-pdb.yaml` - Pod Disruption Budget
-
-## Full Stack Files
-
-- `api-deployment-blue.yaml`, `api-deployment-green.yaml` - API deployments
-- `api-service.yaml`, `api-pdb.yaml` - API service
-- `httproute.yaml` - Gateway API HTTPRoute (/api, /claude, /mcp, /)
-- `gateway.yaml`, `gatewayclass.yaml`, `gateway-certificate.yaml` - Envoy Gateway
-- `gateway-tunnel-service.yaml` - Alias for Cloudflare Tunnel → Gateway
-- `cloudflared-tunnel-deployment.yaml` - Cloudflare Tunnel pod
-- `mcp-service.yaml`, `mcp-referencegrant.yaml`, `referencegrant.yaml` - MCP routing
-
-See `CLOUDFLARE_TUNNEL.md` for tunnel setup.
-
-## Secrets
-
-**No secrets are stored in these files.**
-
-**API secrets** (required): `database-url` and optionally `claude-api-key`:
+## Quick Start
 
 ```bash
+# 1. Create secrets (required before deploy)
+kubectl create secret generic high-command-postgres-credentials \
+  --from-literal=username=highcommand \
+  --from-literal=password='$(openssl rand -base64 32)' \
+  -n high-command
+
 kubectl create secret generic high-command-api-secrets \
-  --from-literal=database-url='postgresql://user:password@high-command-postgres-rw.high-command.svc.cluster.local:5432/highcommand' \
-  --from-literal=claude-api-key='sk-ant-api03-...' \
+  --from-literal=database-url='postgresql://user:pass@high-command-postgres-rw.high-command.svc.cluster.local:5432/highcommand' \
+  --from-literal=claude-api-key='sk-ant-...' \
   -n high-command
+
+kubectl create secret generic high-command-poller-secrets \
+  --from-literal=database-url='postgresql://...' \
+  --from-literal=helldivers-api-base='https://api.helldivers2.dev/api/v1' \
+  --from-literal=helldivers-api-client-name='High Command' \
+  --from-literal=helldivers-api-contact='lee@fullmetal.dev' \
+  --from-literal=scrape-interval='300' \
+  -n high-command
+
+# 2. Deploy
+kubectl apply -k overlays/default
+
+# 3. Cloudflare Tunnel (optional, see docs/CLOUDFLARE_TUNNEL.md)
+kubectl create secret generic cloudflared-tunnel-credentials --from-literal=token='...' -n high-command
+kubectl apply -k overlays/default
 ```
 
-See `api-secrets-example.yaml` for details.
-
-## Cloudflare
-
-The `../cloudflare/` folder contains the tunnel Dockerfile. GitLab CI builds the cloudflared-tunnel image from `cloudflare/Dockerfile`.
-
-## Environment Variables
-
-The UI uses environment variables at build time (Vite). These are configured in:
-- `ui-deployment-blue.yaml`
-- `ui-deployment-green.yaml`
-
-Current environment variables:
-- `NODE_ENV=production`
-- `PORT=3000`
-
-For build-time variables (e.g., `VITE_CLAUDE_API_KEY`), they must be set during the Docker build process, not at runtime.
-
-## Deployment
-
-Deploy all resources:
+## Commands
 
 ```bash
-kubectl apply -f k8s/
+# Build manifests (dry-run)
+kubectl kustomize overlays/default
+
+# Deploy
+kubectl apply -k overlays/default
+
+# Delete
+kubectl delete -k overlays/default
 ```
 
-Switch between blue/green by updating the service selector in `ui-service.yaml`:
+## Secrets Examples
 
-```yaml
-selector:
-  app: high-command-ui
-  version: blue  # or green
-```
+Secret templates are in `base/*/` with `-example` suffix. Create secrets with `kubectl create`, do not apply example files:
 
-Or use the annotation:
+- `base/api/api-secrets-example.yaml`
+- `base/ui/ui-secrets-example.yaml`
+- `base/poller/poller-secrets-example.yaml`
+- `base/postgres/postgres-credentials-example.yaml`
+- `base/cloudflare/cloudflared-tunnel-secrets-example.yaml`
+
+## Prerequisites
+
+- **CloudNativePG operator** – for PostgreSQL cluster
+- **Envoy Gateway** – for Gateway API
+- **cert-manager** – for TLS certificates
+- **Namespace** – `kubectl create namespace high-command` (or let apply create it)
+
+## Blue/Green Switching
 
 ```bash
-kubectl annotate service high-command-ui \
-  deployment.kubernetes.io/active-version=green \
-  -n high-command
+kubectl patch svc high-command-ui -n high-command -p '{"spec":{"selector":{"version":"green"}}}'
+kubectl patch svc high-command-api -n high-command -p '{"spec":{"selector":{"version":"green"}}}'
 ```

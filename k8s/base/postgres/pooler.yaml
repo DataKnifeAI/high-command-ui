@@ -1,0 +1,11 @@
+# PgBouncer pooler for PostgreSQL. Deploy after postgres-cluster.
+apiVersion: postgresql.cnpg.io/v1
+kind: Pooler
+metadata:
+  name: high-command-postgres-pooler
+  namespace: high-command
+spec:
+  cluster:
+    name: high-command-postgres
+  instances: 2
+  type: rw

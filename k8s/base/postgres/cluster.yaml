@@ -1,0 +1,25 @@
+# PostgreSQL cluster (CloudNativePG). Requires CloudNativePG operator.
+# Create postgres-credentials secret first.
+apiVersion: postgresql.cnpg.io/v1
+kind: Cluster
+metadata:
+  name: high-command-postgres
+  namespace: high-command
+spec:
+  instances: 3
+  bootstrap:
+    initdb:
+      database: highcommand
+      owner: highcommand
+      secret:
+        name: high-command-postgres-credentials
+  storage:
+    size: 10Gi
+    storageClass: truenas-nfs
+  resources:
+    requests:
+      memory: "512Mi"
+      cpu: "500m"
+    limits:
+      memory: "1Gi"
+      cpu: "1000m"
