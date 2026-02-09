@@ -22,10 +22,13 @@ Use the token from the Docker command in the Cloudflare dashboard:
 
 ### 2. Deploy the tunnel and gateway alias
 
+The tunnel and gateway alias are included in the kustomize build:
+
 ```bash
-kubectl apply -f gateway-tunnel-service.yaml
-kubectl apply -f cloudflared-tunnel-deployment.yaml
+kubectl apply -k overlays/default
 ```
+
+Or deploy the full stack (see README).
 
 ### 3. Configure ingress in Cloudflare dashboard
 
@@ -78,6 +81,6 @@ docker push harbor.dataknife.net/library/cloudflared-tunnel:latest
 
 ## Files
 
-- `cloudflared-tunnel-deployment.yaml` - Deployment (token from secret, `--no-autoupdate`)
-- `cloudflared-tunnel-secrets-example.yaml` - Secret template (do not commit real token)
-- `gateway-tunnel-service.yaml` - Stable alias to Envoy Gateway for tunnel routing
+- `base/cloudflare/tunnel-deployment.yaml` - Deployment (token from secret, `--no-autoupdate`)
+- `base/cloudflare/cloudflared-tunnel-secrets-example.yaml` - Secret template (do not commit real token)
+- `base/gateway/tunnel-service.yaml` - Stable alias to Envoy Gateway for tunnel routing

@@ -1,3 +1,4 @@
+# Alias for HTTPRoute to reach MCP in mcp-servers namespace
 apiVersion: v1
 kind: Service
 metadata:
@@ -11,6 +12,4 @@ spec:
   ports:
   - name: http
     port: 8000
-    targetPort: 8000
     protocol: TCP
-  sessionAffinity: None
