@@ -9,3 +9,7 @@ spec:
     name: high-command-postgres
   instances: 2
   type: rw
+  pgbouncer:
+    poolMode: transaction
+    parameters:
+      max_client_conn: "500"

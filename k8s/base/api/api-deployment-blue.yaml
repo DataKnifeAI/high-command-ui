@@ -20,7 +20,7 @@ spec:
     spec:
       containers:
       - name: api
-        image: harbor.dataknife.net/library/high-command-api:v0.19
+        image: harbor.dataknife.net/library/high-command-api:v0.21
         imagePullPolicy: Always
         env:
         - name: MODE

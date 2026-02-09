@@ -19,7 +19,7 @@ spec:
     spec:
       containers:
       - name: poller
-        image: harbor.dataknife.net/library/high-command-api:v0.19
+        image: harbor.dataknife.net/library/high-command-api:v0.22
         imagePullPolicy: Always
         env:
         - name: MODE
@@ -28,6 +28,8 @@ spec:
           value: "1"
         - name: LOG_LEVEL
           value: "INFO"
+        - name: POOL_MAX_CONN
+          value: "100"
         - name: DATABASE_URL
           valueFrom:
             secretKeyRef:

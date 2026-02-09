@@ -31,12 +31,12 @@ kubectl create secret generic high-command-postgres-credentials \
   -n high-command
 
 kubectl create secret generic high-command-api-secrets \
-  --from-literal=database-url='postgresql://user:pass@high-command-postgres-rw.high-command.svc.cluster.local:5432/highcommand' \
+  --from-literal=database-url='postgresql://user:pass@high-command-postgres-pooler.high-command.svc.cluster.local:5432/highcommand' \
   --from-literal=claude-api-key='sk-ant-...' \
   -n high-command
 
 kubectl create secret generic high-command-poller-secrets \
-  --from-literal=database-url='postgresql://...' \
+  --from-literal=database-url='postgresql://user:pass@high-command-postgres-pooler.high-command.svc.cluster.local:5432/highcommand' \
   --from-literal=helldivers-api-base='https://api.helldivers2.dev/api/v1' \
   --from-literal=helldivers-api-client-name='High Command' \
   --from-literal=helldivers-api-contact='lee@fullmetal.dev' \
@@ -73,6 +73,17 @@ Secret templates are in `base/*/` with `-example` suffix. Create secrets with `k
 - `base/poller/poller-secrets-example.yaml`
 - `base/postgres/postgres-credentials-example.yaml`
 - `base/cloudflare/cloudflared-tunnel-secrets-example.yaml`
+
+## Database: Use PgBouncer Pooler
+
+API and poller use `high-command-postgres-pooler` to avoid exhausting Postgres `max_connections`. The pooler must be deployed (`postgres-pooler-example.yaml`) before creating secrets.
+
+**To migrate existing deployment** from direct Postgres to pooler:
+```bash
+kubectl delete secret high-command-api-secrets high-command-poller-secrets -n high-command
+# Recreate with pooler URL (see Quick Start above)
+kubectl rollout restart deployment/high-command-api-blue deployment/high-command-api-green deployment/high-command-poller -n high-command
+```
 
 ## Prerequisites
 
