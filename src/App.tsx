@@ -240,15 +240,25 @@ function App() {
                 <h2>💻 DATA CONSOLE</h2>
                 <p>Command the strategic warfare using the Data Console. Input natural language commands and our AI democracy officer will execute MCP tools to gather intelligence and execute operations.</p>
                 
-                <h3>Available Commands:</h3>
+                <h3>Available Commands</h3>
+                <p>Outcome-based (what to do):</p>
                 <ul>
-                  <li><strong>War Status:</strong> "What's the current war status?" / "Show me the war situation"</li>
-                  <li><strong>Planet Data:</strong> "What planets are we fighting on?" / "Show active planets"</li>
-                  <li><strong>Major Orders:</strong> "What are the major orders?" / "Show current objectives"</li>
-                  <li><strong>Faction Stats:</strong> "Show faction information" / "What factions are active?"</li>
-                  <li><strong>Biome Data:</strong> "Show biome information" / "What biomes exist?"</li>
-                  <li><strong>Statistics:</strong> "Show global statistics" / "What are our stats?"</li>
-                  <li><strong>Planet Details:</strong> "Status of planet 0" / "Tell me about planet X"</li>
+                  <li><strong>War summary:</strong> &quot;What&apos;s the state of the war?&quot; / &quot;War summary&quot;</li>
+                  <li><strong>Where to deploy:</strong> &quot;Where should I deploy?&quot; / &quot;Where to fight?&quot;</li>
+                  <li><strong>Liberation priority:</strong> &quot;What to liberate first?&quot; / &quot;Liberation priority&quot;</li>
+                  <li><strong>Mission efficiency:</strong> &quot;How are we doing on missions?&quot; / &quot;Mission efficiency&quot;</li>
+                </ul>
+                <p>Analytics (efficiency and stats):</p>
+                <ul>
+                  <li><strong>Mission analytics:</strong> &quot;Mission analytics&quot; / &quot;Success rate&quot; / &quot;Bug kills&quot;</li>
+                  <li><strong>War analytics:</strong> &quot;War analytics&quot; / &quot;Time left in war&quot;</li>
+                  <li><strong>Planet analytics:</strong> &quot;Which sectors need help?&quot; / &quot;Planet analytics&quot;</li>
+                </ul>
+                <p>Raw data (for custom questions):</p>
+                <ul>
+                  <li><strong>War / planets / statistics:</strong> &quot;War status&quot; / &quot;Show planets&quot; / &quot;Statistics&quot;</li>
+                  <li><strong>Major orders / factions / biomes:</strong> &quot;Major orders&quot; / &quot;Factions&quot; / &quot;Biomes&quot;</li>
+                  <li><strong>Planet details:</strong> &quot;Status of planet 0&quot;</li>
                 </ul>
                 
                 <h3>H.E.L.L. System Overview:</h3>

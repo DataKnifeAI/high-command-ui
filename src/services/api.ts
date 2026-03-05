@@ -85,13 +85,24 @@ class HighCommandAPI {
       })
 
       const data = await this.handleResponse(response)
-      
+
       // Extract text from MCP response format
-      if (data.result?.content?.[0]?.text) {
-        return data.result.content[0].text
+      const rawText = data.result?.content?.[0]?.text
+      if (!rawText) return data.result?.message || 'No response received'
+
+      // Outcome/analytics tools return JSON with summary; show summary for readability when possible
+      try {
+        const parsed = JSON.parse(rawText) as { summary?: string; status?: string; error?: string }
+        if (parsed.summary && parsed.status === 'success') {
+          return parsed.summary + (parsed.error ? `\n\nError: ${parsed.error}` : '')
+        }
+        if (parsed.summary && parsed.status === 'error') {
+          return parsed.summary + (parsed.error ? `\n${parsed.error}` : '')
+        }
+      } catch {
+        // Not JSON or no summary; return as-is
       }
-      
-      return data.result?.message || 'No response received'
+      return rawText
     } catch (error) {
       console.error('Command error:', error)
       throw new Error(`Failed to execute command: ${error instanceof Error ? error.message : 'Unknown error'}`)
@@ -100,15 +111,40 @@ class HighCommandAPI {
 
   private interpretPrompt(prompt: string): string {
     const lower = prompt.toLowerCase()
-    
+
+    // Outcome-based: "where should I deploy?" / "where to fight?"
+    if (lower.includes('where to deploy') || lower.includes('where should i deploy') ||
+        lower.includes('where to fight') || lower.includes('reinforce')) return 'get_where_to_deploy'
+    // Outcome: "what to liberate first?" / "liberation priority"
+    if (lower.includes('liberation priority') || lower.includes('what to liberate') ||
+        lower.includes('liberate first')) return 'get_liberation_priority'
+    // Outcome: "how are we doing?" / "mission efficiency"
+    if (lower.includes('mission efficiency') || lower.includes('how are we doing') ||
+        lower.includes('doing on missions')) return 'get_mission_efficiency_snapshot'
+    // Outcome: "war summary" / "state of the war"
+    if (lower.includes('war summary') || lower.includes('state of the war') ||
+        (lower.includes('war') && lower.includes('summary'))) return 'get_war_summary'
+
+    // Analytics: "which sectors need help?" / "planet analytics"
+    if (lower.includes('sectors need help') || lower.includes('planet analytics') ||
+        lower.includes('which sector')) return 'get_planet_analytics'
+    // Analytics: "mission analytics" / "efficiency"
+    if (lower.includes('mission analytics') || lower.includes('efficiency') && lower.includes('mission')) return 'get_mission_analytics'
+    // Analytics: "war analytics"
+    if (lower.includes('war analytics') || lower.includes('time left') && lower.includes('war')) return 'get_war_analytics'
+    // Analytics (mission stats / kills): single-call answers without arguments
+    if (lower.includes('mission success rate') || lower.includes('success rate') ||
+        lower.includes('bug kill') || lower.includes('terminid kill') ||
+        lower.includes('automaton kill') || lower.includes('mission analytics')) return 'get_mission_analytics'
+
+    // Raw / legacy
     if (lower.includes('war') || lower.includes('status')) return 'get_war_status'
     if (lower.includes('planet')) return 'get_planets'
     if (lower.includes('major order') || lower.includes('orders')) return 'get_campaign_info'
     if (lower.includes('faction')) return 'get_factions'
     if (lower.includes('biome')) return 'get_biomes'
     if (lower.includes('statistic') || lower.includes('stats')) return 'get_statistics'
-    
-    // Default to war status if unsure
+
     return 'get_war_status'
   }
 
