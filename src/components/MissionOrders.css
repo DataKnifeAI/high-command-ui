@@ -5,10 +5,10 @@
   padding: 20px;
   gap: 16px;
   background: linear-gradient(135deg, rgba(0, 0, 0, 0.7) 0%, rgba(20, 20, 20, 0.6) 100%);
-  color: #ffb300;
+  color: var(--helldivers-yellow);
   font-family: 'Courier New', monospace;
   overflow-y: auto;
-  border-left: 3px solid rgba(255, 179, 0, 0.3);
+  border-left: 3px solid rgba(255, 231, 16, 0.3);
 }
 
 .mission-orders-container::-webkit-scrollbar {
@@ -20,32 +20,32 @@
 }
 
 .mission-orders-container::-webkit-scrollbar-thumb {
-  background: rgba(255, 179, 0, 0.4);
+  background: rgba(255, 231, 16, 0.4);
   border-radius: 4px;
 }
 
 .mission-orders-container::-webkit-scrollbar-thumb:hover {
-  background: rgba(255, 179, 0, 0.6);
+  background: rgba(255, 231, 16, 0.6);
 }
 
 .mission-header {
   text-align: center;
   padding-bottom: 16px;
-  border-bottom: 2px solid rgba(255, 179, 0, 0.2);
+  border-bottom: 2px solid rgba(255, 231, 16, 0.2);
 }
 
 .mission-header h2 {
   font-size: 24px;
   font-weight: bold;
-  color: #ffb300;
-  text-shadow: 0 0 10px rgba(255, 179, 0, 0.5);
+  color: var(--helldivers-yellow);
+  text-shadow: 0 0 10px rgba(255, 231, 16, 0.5);
   margin: 0 0 8px 0;
   letter-spacing: 2px;
 }
 
 .mission-subheader {
   font-size: 11px;
-  color: rgba(255, 179, 0, 0.6);
+  color: rgba(255, 231, 16, 0.6);
   letter-spacing: 3px;
   margin: 0;
   font-weight: bold;
@@ -63,7 +63,7 @@
   align-items: center;
   gap: 8px;
   font-size: 11px;
-  color: rgba(255, 179, 0, 0.7);
+  color: rgba(255, 231, 16, 0.7);
   cursor: pointer;
   user-select: none;
   letter-spacing: 1px;
@@ -73,7 +73,7 @@
   width: 16px;
   height: 16px;
   cursor: pointer;
-  accent-color: #ffb300;
+  accent-color: var(--helldivers-yellow);
 }
 
 .toggle-checkbox:hover {
@@ -88,10 +88,10 @@
 
 .mission-briefing {
   background: rgba(0, 0, 0, 0.4);
-  border: 1px solid rgba(255, 179, 0, 0.2);
+  border: 1px solid rgba(255, 231, 16, 0.2);
   border-radius: 2px;
   padding: 16px;
-  box-shadow: inset 0 0 10px rgba(255, 179, 0, 0.05);
+  box-shadow: inset 0 0 10px rgba(255, 231, 16, 0.05);
 }
 
 .mission-briefing h3 {
@@ -100,8 +100,8 @@
   text-transform: uppercase;
   letter-spacing: 2px;
   margin: 0 0 12px 0;
-  text-shadow: 0 0 5px rgba(102, 255, 0, 0.5);
-  border-bottom: 1px solid rgba(102, 255, 0, 0.2);
+  text-shadow: 0 0 5px rgba(64, 145, 108, 0.5);
+  border-bottom: 1px solid rgba(64, 145, 108, 0.2);
   padding-bottom: 8px;
 }
 
@@ -113,10 +113,10 @@
 
 .mission-card {
   background: linear-gradient(135deg, rgba(0, 0, 0, 0.5) 0%, rgba(20, 10, 0, 0.4) 100%);
-  border-left: 4px solid #ffb300;
-  border-top: 1px solid rgba(255, 179, 0, 0.2);
-  border-right: 1px solid rgba(255, 179, 0, 0.1);
-  border-bottom: 1px solid rgba(255, 179, 0, 0.1);
+  border-left: 4px solid var(--helldivers-yellow);
+  border-top: 1px solid rgba(255, 231, 16, 0.2);
+  border-right: 1px solid rgba(255, 231, 16, 0.1);
+  border-bottom: 1px solid rgba(255, 231, 16, 0.1);
   padding: 12px;
   border-radius: 2px;
   transition: all 0.3s ease;
@@ -131,18 +131,18 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background: linear-gradient(90deg, rgba(255, 179, 0, 0.1) 0%, transparent 50%, rgba(255, 179, 0, 0.05) 100%);
+  background: linear-gradient(90deg, rgba(255, 231, 16, 0.1) 0%, transparent 50%, rgba(255, 231, 16, 0.05) 100%);
   pointer-events: none;
 }
 
 .mission-card:hover {
   border-left-color: #66ff00;
-  box-shadow: 0 0 15px rgba(255, 179, 0, 0.3), inset 0 0 10px rgba(102, 255, 0, 0.1);
+  box-shadow: 0 0 15px rgba(255, 231, 16, 0.3), inset 0 0 10px rgba(64, 145, 108, 0.1);
   transform: translateX(4px);
 }
 
 .mission-card.status-active {
-  border-left-color: #ffb300;
+  border-left-color: var(--helldivers-yellow);
 }
 
 .mission-card.status-active:hover {
@@ -298,7 +298,7 @@
 
 .planet-card {
   background: linear-gradient(135deg, rgba(0, 50, 100, 0.3) 0%, rgba(0, 30, 60, 0.2) 100%);
-  border: 1px solid rgba(102, 255, 0, 0.3);
+  border: 1px solid rgba(64, 145, 108, 0.3);
   border-radius: 2px;
   padding: 12px;
   text-align: center;
@@ -314,13 +314,13 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background: radial-gradient(circle, rgba(102, 255, 0, 0.1) 0%, transparent 70%);
+  background: radial-gradient(circle, rgba(64, 145, 108, 0.1) 0%, transparent 70%);
   pointer-events: none;
 }
 
 .planet-card:hover {
-  border-color: rgba(255, 179, 0, 0.6);
-  box-shadow: 0 0 15px rgba(102, 255, 0, 0.3), inset 0 0 10px rgba(102, 255, 0, 0.1);
+  border-color: rgba(255, 231, 16, 0.6);
+  box-shadow: 0 0 15px rgba(64, 145, 108, 0.3), inset 0 0 10px rgba(64, 145, 108, 0.1);
   transform: scale(1.05);
 }
 
@@ -328,14 +328,14 @@
   font-size: 12px;
   font-weight: bold;
   color: #66ff00;
-  text-shadow: 0 0 5px rgba(102, 255, 0, 0.5);
+  text-shadow: 0 0 5px rgba(64, 145, 108, 0.5);
   margin-bottom: 6px;
   letter-spacing: 1px;
 }
 
 .planet-biome {
   font-size: 10px;
-  color: rgba(255, 179, 0, 0.7);
+  color: rgba(255, 231, 16, 0.7);
   font-style: italic;
 }
 
@@ -383,14 +383,14 @@
   background: rgba(0, 0, 0, 0.4);
   text-align: center;
   min-width: 60px;
-  color: #ffb300;
+  color: var(--helldivers-yellow);
 }
 
 .mission-expand-icon {
   margin-left: auto;
   transition: transform 0.3s ease;
   font-size: 12px;
-  color: rgba(255, 179, 0, 0.6);
+  color: rgba(255, 231, 16, 0.6);
 }
 
 .mission-card.expanded .mission-expand-icon {
@@ -400,7 +400,7 @@
 .mission-details {
   margin-top: 12px;
   padding-top: 12px;
-  border-top: 1px solid rgba(255, 179, 0, 0.2);
+  border-top: 1px solid rgba(255, 231, 16, 0.2);
   display: flex;
   flex-direction: column;
   gap: 8px;
@@ -420,12 +420,12 @@
 
 .detail-item {
   font-size: 12px;
-  color: rgba(255, 179, 0, 0.8);
+  color: rgba(255, 231, 16, 0.8);
   line-height: 1.4;
 }
 
 .detail-item strong {
-  color: #ffb300;
+  color: var(--helldivers-yellow);
   font-weight: bold;
 }
 
@@ -445,12 +445,12 @@
   flex-direction: column;
   gap: 4px;
   padding-left: 12px;
-  border-left: 2px solid rgba(255, 179, 0, 0.3);
+  border-left: 2px solid rgba(255, 231, 16, 0.3);
 }
 
 .objective-item {
   font-size: 11px;
-  color: rgba(255, 179, 0, 0.7);
+  color: rgba(255, 231, 16, 0.7);
 }
 
 .failed-badge {
@@ -476,9 +476,9 @@
 .refresh-button {
   padding: 6px 12px;
   font-size: 12px;
-  background: rgba(255, 179, 0, 0.1);
-  border: 1px solid rgba(255, 179, 0, 0.4);
-  color: #ffb300;
+  background: rgba(255, 231, 16, 0.1);
+  border: 1px solid rgba(255, 231, 16, 0.4);
+  color: var(--helldivers-yellow);
   font-family: 'Courier New', monospace;
   cursor: pointer;
   border-radius: 4px;
@@ -487,9 +487,9 @@
 }
 
 .refresh-button:hover:not(:disabled) {
-  background: rgba(255, 179, 0, 0.2);
-  border-color: rgba(255, 179, 0, 0.8);
-  text-shadow: 0 0 10px rgba(255, 179, 0, 0.5);
+  background: rgba(255, 231, 16, 0.2);
+  border-color: rgba(255, 231, 16, 0.8);
+  text-shadow: 0 0 10px rgba(255, 231, 16, 0.5);
   transform: scale(1.05);
 }
 
@@ -500,7 +500,7 @@
 
 .last-refresh {
   font-size: 10px;
-  color: rgba(255, 179, 0, 0.5);
+  color: rgba(255, 231, 16, 0.5);
   margin: 0;
   font-style: italic;
   white-space: nowrap;
