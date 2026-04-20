@@ -267,4 +267,6 @@ High Command UI integrates **Claude Haiku 4.5** for advanced natural language pr
 
 ## License
 
-High Command UI - Strategic Management Interface
+Licensed under the Apache License, Version 2.0. See [LICENSE](LICENSE) for the full text.
+
+Copyright 2026 DataKnifeAI
