@@ -1,24 +1,38 @@
-/* Hell Divers 2 Themed App Styles */
+/* Helldivers 2 Themed App Styles - Super Earth Propaganda Aesthetic */
 
 :root {
-  /* HD2 Military Color Palette */
-  --primary-color: #0a0a0a;
-  --secondary-color: #1a1a1a;
-  --tertiary-color: #2d2d2d;
-  --accent-color: #ffb300;
-  --accent-yellow: #ffb300;
-  --accent-red: #d32f2f;
-  --success-color: #66ff00;
-  --success-green: #66ff00;
-  --warning-color: #ff4400;
-  --text-light: #e8e8e8;
-  --text-dim: #999999;
-  --text-dark: #1a1a2e;
-  --border-color: #444;
-  --gold-accent: #d4a574;
-  --tactical-green: #2d5a2d;
+  /* HD2 Official UI Palette (from game iconography) */
+  --super-earth-blue: #41639c;
+  --helldivers-yellow: #ffe710;
+  --diver-orange: #ff9d45;
+  --diver-blue: #81abff;
+  --diver-pink: #f88aff;
+  
+  /* HD2 Military / Space Backgrounds */
+  --primary-color: #0a1628;
+  --secondary-color: #132f4c;
+  --tertiary-color: #1a3a52;
+  
+  /* Accents - Helldivers iconic colors */
+  --accent-color: #ffe710;
+  --accent-yellow: #ffe710;
+  --accent-orange: #ff9d45;
+  --accent-red: #e55039;
+  
+  /* Status colors - military palette */
+  --success-color: #40916c;
+  --success-green: #40916c;
+  --warning-color: #ff9d45;
+  
+  /* Text & UI */
+  --text-light: #e8ecf0;
+  --text-dim: #8b9cb8;
+  --text-dark: #0a1628;
+  --border-color: #41639c;
+  --gold-accent: #ff9d45;
+  --tactical-green: #2d6a4f;
   --tactical-red: #5a2d2d;
-  --hover-color: #3a3a3a;
+  --hover-color: #1a3a52;
 }
 
 * {
@@ -31,7 +45,7 @@ body {
   font-family: 'Courier New', 'Courier', monospace;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
+  background: linear-gradient(135deg, #0a1628 0%, #132f4c 50%, #1a3a52 100%);
   color: var(--text-light);
   letter-spacing: 0.5px;
 }
@@ -45,12 +59,12 @@ body {
   display: flex;
   flex-direction: column;
   height: 100vh;
-  background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
+  background: linear-gradient(135deg, #0a1628 0%, #132f4c 50%, #1a3a52 100%);
   overflow: hidden;
   position: relative;
 }
 
-/* Tactical scanline effect */
+/* Tactical scanline effect - Helldivers yellow */
 .app::before {
   content: '';
   position: fixed;
@@ -60,8 +74,8 @@ body {
   height: 100%;
   background: repeating-linear-gradient(
     0deg,
-    rgba(255, 179, 0, 0.03) 0px,
-    rgba(255, 179, 0, 0.03) 1px,
+    rgba(255, 231, 16, 0.03) 0px,
+    rgba(255, 231, 16, 0.03) 1px,
     transparent 1px,
     transparent 2px
   );
@@ -70,11 +84,11 @@ body {
 }
 
 .header {
-  background: linear-gradient(135deg, #0a0a0a 0%, #2d2d2d 100%);
-  border-bottom: 3px solid var(--accent-color);
+  background: linear-gradient(135deg, #0a1628 0%, #132f4c 50%, #1a3a52 100%);
+  border-bottom: 3px solid var(--helldivers-yellow);
   border-top: 1px solid var(--accent-red);
   padding: 20px;
-  box-shadow: 0 8px 32px rgba(255, 179, 0, 0.15), inset 0 1px 0 rgba(255, 179, 0, 0.1);
+  box-shadow: 0 8px 32px rgba(255, 231, 16, 0.15), inset 0 1px 0 rgba(255, 231, 16, 0.1);
   position: relative;
   z-index: 10;
   display: flex;
@@ -93,8 +107,8 @@ body {
     90deg,
     transparent,
     transparent 2px,
-    rgba(255, 179, 0, 0.02) 2px,
-    rgba(255, 179, 0, 0.02) 4px
+    rgba(255, 231, 16, 0.02) 2px,
+    rgba(255, 231, 16, 0.02) 4px
   );
   pointer-events: none;
 }
@@ -110,8 +124,8 @@ body {
   display: flex;
   gap: 12px;
   padding: 12px 16px;
-  background: rgba(0, 0, 0, 0.4);
-  border: 1px solid rgba(255, 179, 0, 0.2);
+  background: rgba(10, 22, 40, 0.6);
+  border: 1px solid rgba(255, 231, 16, 0.3);
   border-radius: 0;
   flex-wrap: wrap;
   align-items: center;
@@ -125,7 +139,7 @@ body {
   align-items: center;
   gap: 4px;
   padding: 6px 12px;
-  border-right: 1px solid rgba(255, 179, 0, 0.2);
+  border-right: 1px solid rgba(65, 99, 156, 0.4);
 }
 
 .stat-item:last-child {
@@ -144,7 +158,7 @@ body {
   font-size: 16px;
   color: var(--success-color);
   font-weight: bold;
-  text-shadow: 0 0 8px rgba(102, 255, 0, 0.4);
+  text-shadow: 0 0 8px rgba(64, 145, 108, 0.4);
 }
 
 .stat-item.live-indicator {
@@ -157,7 +171,7 @@ body {
 }
 
 .stat-item.offline-notice {
-  color: #ffb300;
+  color: var(--helldivers-yellow);
   font-style: italic;
   flex-grow: 1;
   text-align: center;
@@ -168,41 +182,41 @@ body {
   height: 10px;
   border-radius: 50%;
   background: var(--success-color);
-  box-shadow: 0 0 8px var(--success-color), inset 0 0 4px rgba(102, 255, 0, 0.6);
+  box-shadow: 0 0 8px var(--success-color), inset 0 0 4px rgba(64, 145, 108, 0.6);
   animation: pulse-live 1.5s ease-in-out infinite;
 }
 
 .live-dot.degraded {
-  background: #ffb300;
-  box-shadow: 0 0 8px #ffb300, inset 0 0 4px rgba(255, 179, 0, 0.6);
+  background: var(--diver-orange);
+  box-shadow: 0 0 8px var(--diver-orange), inset 0 0 4px rgba(255, 157, 69, 0.6);
   animation: pulse-degraded 2s ease-in-out infinite;  /* Slower pulse for degraded */
 }
 
 .live-dot.offline {
-  background: #ff0000;
-  box-shadow: 0 0 8px #ff0000, inset 0 0 4px rgba(255, 0, 0, 0.6);
+  background: var(--accent-red);
+  box-shadow: 0 0 8px var(--accent-red), inset 0 0 4px rgba(229, 80, 57, 0.6);
   animation: none;  /* No blinking when offline */
 }
 
 @keyframes pulse-live {
   0%, 100% {
     opacity: 1;
-    box-shadow: 0 0 8px var(--success-color), inset 0 0 4px rgba(102, 255, 0, 0.6);
+    box-shadow: 0 0 8px var(--success-color), inset 0 0 4px rgba(64, 145, 108, 0.6);
   }
   50% {
     opacity: 0.6;
-    box-shadow: 0 0 12px var(--success-color), inset 0 0 6px rgba(102, 255, 0, 0.8);
+    box-shadow: 0 0 12px var(--success-color), inset 0 0 6px rgba(64, 145, 108, 0.8);
   }
 }
 
 @keyframes pulse-degraded {
   0%, 100% {
     opacity: 1;
-    box-shadow: 0 0 8px #ffb300, inset 0 0 4px rgba(255, 179, 0, 0.6);
+    box-shadow: 0 0 8px var(--diver-orange), inset 0 0 4px rgba(255, 157, 69, 0.6);
   }
   50% {
     opacity: 0.4;
-    box-shadow: 0 0 12px #ffb300, inset 0 0 6px rgba(255, 179, 0, 0.8);
+    box-shadow: 0 0 12px var(--diver-orange), inset 0 0 6px rgba(255, 157, 69, 0.8);
   }
 }
 
@@ -215,34 +229,34 @@ body {
 }
 
 .live-text.degraded {
-  color: #ffb300;
+  color: var(--diver-orange);
 }
 
 .live-text.offline {
-  color: #ff0000;
+  color: var(--accent-red);
 }
 
 .faction-stat {
-  background: rgba(102, 255, 0, 0.05);
-  border: 1px solid rgba(102, 255, 0, 0.2);
+  background: rgba(64, 145, 108, 0.1);
+  border: 1px solid rgba(64, 145, 108, 0.3);
   padding: 10px 14px;
   border-radius: 2px;
   transition: all 0.3s ease;
 }
 
 .faction-stat:hover {
-  background: rgba(102, 255, 0, 0.1);
-  box-shadow: 0 0 12px rgba(102, 255, 0, 0.3);
+  background: rgba(64, 145, 108, 0.2);
+  box-shadow: 0 0 12px rgba(64, 145, 108, 0.4);
 }
 
 .faction-item {
-  background: rgba(102, 179, 255, 0.08);
-  border: 1px solid rgba(102, 179, 255, 0.3);
+  background: rgba(129, 171, 255, 0.1);
+  border: 1px solid rgba(129, 171, 255, 0.4);
 }
 
 .faction-item:hover {
-  background: rgba(102, 179, 255, 0.15);
-  box-shadow: 0 0 12px rgba(102, 179, 255, 0.4);
+  background: rgba(129, 171, 255, 0.2);
+  box-shadow: 0 0 12px rgba(129, 171, 255, 0.5);
 }
 
 .stat-sublabel {
@@ -261,8 +275,8 @@ body {
   gap: 16px;
   padding: 12px 20px;
   margin-top: 8px;
-  background: linear-gradient(90deg, rgba(255, 179, 0, 0.1) 0%, rgba(255, 179, 0, 0.05) 50%, rgba(255, 179, 0, 0.1) 100%);
-  border: 1px solid rgba(255, 179, 0, 0.2);
+  background: linear-gradient(90deg, rgba(255, 231, 16, 0.1) 0%, rgba(255, 231, 16, 0.05) 50%, rgba(255, 231, 16, 0.1) 100%);
+  border: 1px solid rgba(255, 231, 16, 0.3);
   border-radius: 2px;
   font-style: italic;
 }
@@ -286,8 +300,8 @@ body {
   align-items: center;
   justify-content: center;
   padding: 10px 16px;
-  background: rgba(211, 47, 47, 0.1);
-  border-top: 1px solid rgba(211, 47, 47, 0.3);
+  background: rgba(229, 80, 57, 0.15);
+  border-top: 1px solid rgba(229, 80, 57, 0.4);
   color: var(--accent-red);
   font-size: 10px;
   letter-spacing: 1px;
@@ -310,11 +324,11 @@ body {
   font-weight: 900;
   letter-spacing: 2px;
   text-transform: uppercase;
-  color: var(--accent-color);
+  color: var(--helldivers-yellow);
   text-shadow: 
-    0 0 10px rgba(255, 179, 0, 0.5),
-    0 0 20px rgba(255, 179, 0, 0.3),
-    2px 2px 0 rgba(0, 0, 0, 0.8);
+    0 0 10px rgba(255, 231, 16, 0.5),
+    0 0 20px rgba(255, 231, 16, 0.3),
+    2px 2px 0 rgba(10, 22, 40, 0.9);
   font-family: 'Arial Black', sans-serif;
   text-align: center;
 }
@@ -340,11 +354,11 @@ body {
 
 .tabs {
   display: flex;
-  border-bottom: 2px solid var(--accent-color);
-  border-top: 1px solid var(--tertiary-color);
-  background: linear-gradient(90deg, #0a0a0a 0%, #1a1a1a 50%, #0a0a0a 100%);
+  border-bottom: 2px solid var(--helldivers-yellow);
+  border-top: 1px solid var(--super-earth-blue);
+  background: linear-gradient(90deg, #0a1628 0%, #132f4c 50%, #0a1628 100%);
   gap: 0;
-  box-shadow: inset 0 2px 4px rgba(255, 179, 0, 0.05);
+  box-shadow: inset 0 2px 4px rgba(255, 231, 16, 0.05);
 }
 
 .tab {
@@ -358,7 +372,7 @@ body {
   font-weight: 700;
   transition: all 0.2s ease;
   border-bottom: 2px solid transparent;
-  border-right: 1px solid rgba(255, 179, 0, 0.1);
+  border-right: 1px solid rgba(65, 99, 156, 0.3);
   text-transform: uppercase;
   letter-spacing: 1px;
   font-family: 'Courier New', monospace;
@@ -369,25 +383,25 @@ body {
 }
 
 .tab:hover {
-  color: var(--accent-color);
-  background: rgba(255, 179, 0, 0.05);
-  box-shadow: inset 0 0 20px rgba(255, 179, 0, 0.1);
+  color: var(--helldivers-yellow);
+  background: rgba(255, 231, 16, 0.08);
+  box-shadow: inset 0 0 20px rgba(255, 231, 16, 0.1);
 }
 
 .tab.active {
-  color: var(--accent-color);
-  border-bottom-color: var(--accent-color);
-  background: rgba(255, 179, 0, 0.08);
+  color: var(--helldivers-yellow);
+  border-bottom-color: var(--helldivers-yellow);
+  background: rgba(255, 231, 16, 0.1);
   box-shadow: 
-    inset 0 -2px 0 var(--accent-color),
-    0 0 15px rgba(255, 179, 0, 0.2);
-  text-shadow: 0 0 10px rgba(255, 179, 0, 0.5);
+    inset 0 -2px 0 var(--helldivers-yellow),
+    0 0 15px rgba(255, 231, 16, 0.2);
+  text-shadow: 0 0 10px rgba(255, 231, 16, 0.5);
 }
 
 .content {
   flex: 1;
   overflow: hidden;
-  background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
+  background: linear-gradient(135deg, #0a1628 0%, #132f4c 50%, #1a3a52 100%);
   position: relative;
 }
 
@@ -400,8 +414,8 @@ body {
 }
 
 .help-section {
-  background: rgba(0, 0, 0, 0.4);
-  border: 1px solid rgba(255, 179, 0, 0.3);
+  background: rgba(10, 22, 40, 0.6);
+  border: 1px solid rgba(65, 99, 156, 0.5);
   padding: 24px;
   border-radius: 2px;
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.5);
@@ -409,10 +423,10 @@ body {
 
 .help-section h2 {
   font-size: 24px;
-  color: var(--accent-color);
+  color: var(--helldivers-yellow);
   margin-bottom: 12px;
   letter-spacing: 1px;
-  text-shadow: 0 0 10px rgba(255, 179, 0, 0.3);
+  text-shadow: 0 0 10px rgba(255, 231, 16, 0.4);
 }
 
 .help-section h3 {
@@ -443,7 +457,7 @@ body {
   color: var(--text-light);
   padding: 6px 12px;
   border-left: 2px solid var(--success-color);
-  background: rgba(102, 255, 0, 0.05);
+  background: rgba(64, 145, 108, 0.1);
   margin-bottom: 8px;
 }
 
