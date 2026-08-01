@@ -1,5 +1,8 @@
 # High Command UI
 
+![High Command UI](docs/assets/high-command-ui-hero.jpg)
+
+
 A modern, interactive web-based user interface for the High Command MCP Server. This React + TypeScript application provides a chat-like prompt interface for interacting with the High Command strategic management system.
 
 ## Features
