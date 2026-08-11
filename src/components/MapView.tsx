@@ -521,9 +521,9 @@ const MapView: React.FC<MapViewProps> = ({ warStatus }) => {
         {/* SVG orbital paths */}
   <svg ref={svgRef} className="orbital-map" viewBox={`${viewBox.x} ${viewBox.y} ${viewBox.w} ${viewBox.h}`}>
           {/* Orbital rings - visual guides for the galactic map */}
-          <circle cx="400" cy="400" r="160" fill="none" stroke="rgba(255, 179, 0, 0.04)" strokeWidth="1" strokeDasharray="4,4" />
-          <circle cx="400" cy="400" r="280" fill="none" stroke="rgba(255, 179, 0, 0.05)" strokeWidth="1" strokeDasharray="4,4" />
-          <circle cx="400" cy="400" r="750" fill="none" stroke="rgba(255, 179, 0, 0.1)" strokeWidth="1.5" />
+          <circle cx="400" cy="400" r="160" fill="none" stroke="rgba(255, 231, 16, 0.04)" strokeWidth="1" strokeDasharray="4,4" />
+          <circle cx="400" cy="400" r="280" fill="none" stroke="rgba(255, 231, 16, 0.05)" strokeWidth="1" strokeDasharray="4,4" />
+          <circle cx="400" cy="400" r="750" fill="none" stroke="rgba(255, 231, 16, 0.1)" strokeWidth="1.5" />
 
           {/* Sector connecting lines - draw lines between planets in same sector - HIDDEN */}
           {false && planets && planets.length > 1 && (
@@ -541,7 +541,7 @@ const MapView: React.FC<MapViewProps> = ({ warStatus }) => {
                         y1={400 + pos1.y}
                         x2={400 + pos2.x}
                         y2={400 + pos2.y}
-                        stroke="rgba(102, 255, 0, 0.3)"
+                        stroke="rgba(64, 145, 108, 0.3)"
                         strokeWidth="0.5"
                         strokeDasharray="5,5"
                       />
@@ -554,11 +554,11 @@ const MapView: React.FC<MapViewProps> = ({ warStatus }) => {
 
           {/* Debug: Coordinate crosshairs at Super Earth center - HIDDEN */}
           {false && (
-          <g opacity="0.3" stroke="rgba(255, 179, 0, 0.5)" strokeWidth="1">
+          <g opacity="0.3" stroke="rgba(255, 231, 16, 0.5)" strokeWidth="1">
             <line x1="350" y1="400" x2="450" y2="400" />
             <line x1="400" y1="350" x2="400" y2="450" />
-            <circle cx="400" cy="400" r="2" fill="rgba(255, 179, 0, 1)" />
-            <text x="410" y="395" fill="rgba(255, 179, 0, 0.7)" fontSize="10">(400, 400)</text>
+            <circle cx="400" cy="400" r="2" fill="rgba(255, 231, 16, 1)" />
+            <text x="410" y="395" fill="rgba(255, 231, 16, 0.7)" fontSize="10">(400, 400)</text>
           </g>
           )}
 
@@ -577,7 +577,7 @@ const MapView: React.FC<MapViewProps> = ({ warStatus }) => {
                       y1="400"
                       x2={400 + pos.x}
                       y2={400 + pos.y}
-                      stroke="rgba(255, 179, 0, 0.2)"
+                      stroke="rgba(255, 231, 16, 0.2)"
                       strokeWidth="0.8"
                     />
                   )
