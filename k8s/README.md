@@ -20,7 +20,7 @@ Traffic flow: **Cloudflare Tunnel** → **Envoy Gateway** → **HTTPRoute** → 
 - `gateway.yaml`, `gatewayclass.yaml`, `gateway-certificate.yaml` - Envoy Gateway
 - `gateway-tunnel-service.yaml` - Alias for Cloudflare Tunnel → Gateway
 - `cloudflared-tunnel-deployment.yaml` - Cloudflare Tunnel pod
-- `mcp-service.yaml`, `mcp-referencegrant.yaml`, `referencegrant.yaml` - MCP routing
+- `mcp-service.yaml`, `mcp-referencegrant.yaml` - MCP routing
 
 See `CLOUDFLARE_TUNNEL.md` for tunnel setup.
 
