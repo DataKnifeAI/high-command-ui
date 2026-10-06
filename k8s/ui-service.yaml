@@ -6,12 +6,12 @@ metadata:
   labels:
     app: high-command-ui
   annotations:
-    deployment.kubernetes.io/active-version: "blue"
+    deployment.kubernetes.io/active-version: "green"
 spec:
   type: ClusterIP
   selector:
     app: high-command-ui
-    version: blue
+    version: green
   ports:
   - name: http
     port: 80

@@ -28,7 +28,7 @@ spec:
       - name: harbor-registry-secret
       containers:
       - name: cloudflared
-        image: harbor.dataknife.net/library/cloudflared-tunnel:v0.27
+        image: harbor.dataknife.net/library/cloudflared-tunnel:v0.29
         imagePullPolicy: IfNotPresent
         env:
         - name: TUNNEL_TOKEN
