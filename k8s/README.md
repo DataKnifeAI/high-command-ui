@@ -63,6 +63,11 @@ Deploy all resources:
 kubectl apply -f k8s/
 ```
 
+Both colors pin an explicit image tag. To release: set the new tag on the color the Service
+is **not** selecting, `kubectl apply` that deployment, check its pods, then switch the Service.
+The other color keeps the previous tag as the rollback target (switch the selector back).
+Currently green runs `v0.29` (active) and blue runs `v0.23` (rollback).
+
 Switch between blue/green by updating the service selector in `ui-service.yaml`:
 
 ```yaml
